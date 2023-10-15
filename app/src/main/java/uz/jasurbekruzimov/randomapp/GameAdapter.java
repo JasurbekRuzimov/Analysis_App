@@ -1,5 +1,6 @@
 package uz.jasurbekruzimov.randomapp;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +26,12 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GameViewHolder
         return new GameViewHolder(gameView);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull GameViewHolder holder, int position) {
         Game game = gamesList.get(position);
         holder.numId.setText(String.valueOf(position + 1));
-        holder.yes_txt.setText(game.isYes() ? "Ha" : "Yo'q");
+        holder.yes_txt.setText("Variant-" + String.valueOf(position+1));
     }
 
     @Override

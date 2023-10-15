@@ -2,6 +2,7 @@ package uz.jasurbekruzimov.randomapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Bundle;
 import android.view.View;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(gameAdapter);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void calculateCombinations(int n, int index, boolean[] currentCombination) {
         if (index == n) {
             Game game = new Game(currentCombination);
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             currentCombination[index] = false;
             calculateCombinations(n, index + 1, currentCombination);
-            currentCombination[index] = true;
+            currentCombination[index] = false;
             calculateCombinations(n, index + 1, currentCombination);
         }
         gameAdapter.notifyDataSetChanged();

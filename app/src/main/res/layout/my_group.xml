@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:id="@+id/mainLayout">
+    android:id="@+id/groupMainLayout">
 
     <androidx.cardview.widget.CardView
         android:layout_width="280dp"
@@ -28,7 +28,7 @@
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/numId"
+                android:id="@+id/groupNumId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -45,30 +45,30 @@
 
 
             <TextView
-                android:id="@+id/yes_txt"
+                android:id="@+id/groupResult"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="70dp"
+                android:layout_marginStart="110dp"
                 android:fontFamily="@font/montserrat"
                 android:gravity="center"
-                android:text="Variant - 1"
+                android:text="Ha"
                 android:textColor="@color/primary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/numId"
+                app:layout_constraintTop_toTopOf="@+id/groupNumId"
                 app:layout_constraintVertical_bias="1.0"
                 tools:ignore="HardcodedText" />
 
             <CheckBox
-                android:id="@+id/checkBox"
+                android:id="@+id/groupCheckBox"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginEnd="1dp"
-                app:layout_constraintBottom_toBottomOf="@+id/yes_txt"
+                app:layout_constraintBottom_toBottomOf="@+id/groupResult"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/yes_txt" />
+                app:layout_constraintTop_toTopOf="@+id/groupResult" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

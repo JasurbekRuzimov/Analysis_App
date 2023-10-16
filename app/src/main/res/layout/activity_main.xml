@@ -81,7 +81,6 @@
 
     </LinearLayout>
 
-
     <Button
         android:id="@+id/calculateButton"
         android:layout_width="wrap_content"
@@ -92,8 +91,21 @@
         android:text="Hisoblash"
         tools:ignore="HardcodedText" />
 
+    <ImageView
+        android:id="@+id/downloadID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/baseline_download_24"
+        android:layout_gravity="right"
+        android:visibility="gone"
+        android:backgroundTint="@color/primary"
+        android:tint="@color/primary"
+        android:layout_marginRight="20dp"
+        tools:ignore="ContentDescription,RtlHardcoded,UseAppTint" />
+
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/groupRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="6dp"

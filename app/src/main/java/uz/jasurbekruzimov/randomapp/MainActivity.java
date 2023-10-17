@@ -2,7 +2,6 @@ package uz.jasurbekruzimov.randomapp;
 
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
-import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
-    private GameAdapter gameAdapter;
     private ArrayList<String> resultList;
     private RecyclerView recyclerView;
     EditText elementCountEditText;
@@ -37,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         downloadID = findViewById(R.id.downloadID);
-        downloadID.setVisibility(View.GONE); // Boshlang'ich holatda yashirilgan
+        downloadID.setVisibility(View.GONE);
 
         variantNumber = findViewById(R.id.variantNumber);
         recyclerView = findViewById(R.id.groupRecyclerView);
@@ -45,24 +43,23 @@ public class MainActivity extends AppCompatActivity {
         elementCountEditText = findViewById(R.id.elementCountEditText);
         Button calculateButton = findViewById(R.id.calculateButton);
 
-        calculateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                calculate500Combinations();
-                downloadID.setVisibility(View.VISIBLE);
-            }
+        calculateButton.setOnClickListener(v -> {
+            calculate500Combinations();
+            downloadID.setVisibility(View.VISIBLE);
         });
 
-        downloadID.setOnClickListener(v -> saveToFile(resultList));
+        downloadID.setOnClickListener(v -> {
+            saveToFile(resultList);
+            Toast.makeText(this, "File saved", Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void calculate500Combinations() {
         String input = elementCountEditText.getText().toString().trim();
         if (input.isEmpty()) {
-            downloadID.setVisibility(View.GONE);// ElementCountEditText bo'sh bo'lsa, bunda ma'lumot kiritilmagan
+            downloadID.setVisibility(View.GONE);
             Toast.makeText(this, "Ma'lumotlar kiritilmagan", Toast.LENGTH_SHORT).show();
         } else {
-            // ElementCountEditText bo'sh bo'lmasa, ma'lumotlarni ishlab chiqing
             resultList = new ArrayList<>();
             ArrayList<Integer> combinations = new ArrayList<>();
             for (int i = 0; i < (int) Math.pow(2, Double.parseDouble(input)); i++) {
@@ -73,24 +70,22 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
             SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
-            for (int i = 0; i < 500; i++) {
-                String result = getCombinationResult(combinations.get(i), 20); // Assuming 500 is the element count
+            for (int i = 0; i < 1250; i++) {
+                String result = getCombinationResult(combinations.get(i));
                 resultList.add(result);
                 myEdit.putString("variant" + i, result);
             }
             myEdit.apply();
 
-            gameAdapter = new GameAdapter(resultList);
+            GameAdapter gameAdapter = new GameAdapter(resultList);
             recyclerView.setAdapter(gameAdapter);
         }
 
     }
 
-    // Qolgan metodlarni shunchaki saqlashingiz mumkin
-
-    private String getCombinationResult(int n, int length) {
+    private String getCombinationResult(int n) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < 20; i++) {
             int temp = n >> i;
             if ((temp & 1) == 1) {
                 sb.append("  Ha \n");
@@ -102,52 +97,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveToFile(ArrayList<String> resultList) {
-        // O'zingiz kerakli kodi qo'shing
-    }
-
-    private void saveToCSV(ArrayList<String> resultList) {
-        String fileName = "variants.csv";
-        File file = new File(Environment.getExternalStorageDirectory(), fileName);
+        String fileName = "Variants-1250.docx";
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
         try {
             FileWriter fw = new FileWriter(file);
-            for (String variant : resultList) {
-                fw.append(variant).append("\n");
+            for (int i = 0; i < resultList.size(); i++) {
+                fw.append("Variant ").append(String.valueOf(i + 1)).append(": \n").append(resultList.get(i)).append("\n");
             }
             fw.flush();
             fw.close();
-            Toast.makeText(this, "File saved: " + file.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Fayl muvaffaqiyatli yuklab olindi: " + file.getAbsolutePath(), Toast.LENGTH_LONG).show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
-//    private void saveToExcel(ArrayList<String> resultList) {
-//        String fileName = "variants.xls";
-//        HSSFWorkbook workbook = new HSSFWorkbook();
-//        HSSFSheet sheet = workbook.createSheet("Variants");
-//
-//        int rowNum = 0;
-//        for (String variant : resultList) {
-//            Keyboard.Row row = sheet.createRow(rowNum++);
-//            String[] tokens = variant.split(",");
-//            int colNum = 0;
-//            for (String token : tokens) {
-//                Cell cell = row.createCell(colNum++);
-//                cell.setCellValue(token);
-//            }
-//        }
-//
-//        try {
-//            FileOutputStream outputStream = new FileOutputStream(fileName);
-//            workbook.write(outputStream);
-//            workbook.close();
-//            Toast.makeText(this, "File saved: " + fileName, Toast.LENGTH_SHORT).show();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
 
 }

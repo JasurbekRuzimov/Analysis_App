@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
             SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 30; i++) {
                 String result = getCombinationResult(combinations.get(i));
                 resultList.add(result);
                 myEdit.putString("variant" + i, result);
@@ -85,19 +85,19 @@ public class MainActivity extends AppCompatActivity {
 
     private String getCombinationResult(int n) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             int temp = n >> i;
             if ((temp & 1) == 1) {
-                sb.append(i+1 + " - Ha \n");
+                sb.append(i+1).append(" - Ha \n");
             } else {
-                sb.append(i+1 + " - Yo'q \n");
+                sb.append(i+1).append(" - Yo'q \n");
             }
         }
         return sb.toString();
     }
 
     private void saveToFile(ArrayList<String> resultList) {
-        String fileName = "Variants-20.docx";
+        String fileName = "Variants-30.docx";
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
         try {
             FileWriter fw = new FileWriter(file);
